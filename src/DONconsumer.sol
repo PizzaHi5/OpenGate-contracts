@@ -3,6 +3,7 @@ pragma solidity ^0.8.7;
 
 import {Functions, FunctionsClient} from "@chainlink/contracts/src/v0.8/dev/functions/FunctionsClient.sol";
 import {ConfirmedOwner} from "@chainlink/contracts/src/v0.8/ConfirmedOwner.sol";
+import {AggregatorV3Interface} from "@chainlink/contracts/src/v0.8/interfaces/AggregatorV3Interface.sol";
 
 /**
  * @title Functions Consumer contract, Reference functions-hardhat-starter-kit
@@ -17,6 +18,9 @@ contract DONconsumer is FunctionsClient, ConfirmedOwner {
   bytes public latestError;
 
   uint96 public fee;
+
+  // Link/usd in matic
+  address private constant aggregator = 0x1C2252aeeD50e0c9B64bDfF2735Ee3C932F5C408;
 
   event OCRResponse(bytes32 indexed requestId, bytes result, bytes err);
 
@@ -86,14 +90,15 @@ contract DONconsumer is FunctionsClient, ConfirmedOwner {
   }
 
   /**
-   * @notice Estimate the cost of transaction
+   * @notice Return USD cost w/o aggregator decimals
    */
   function getCostEstimate(
     Functions.Request memory req,
     uint64 subscriptionId,
     uint32 gasLimit,
     uint256 gasPrice
-  ) external view returns (uint96) {
-    return estimateCost(req, subscriptionId, gasLimit, gasPrice);
+  ) external view returns (uint256) {
+    (,int256 price,,,) = AggregatorV3Interface(aggregator).latestRoundData();
+    return uint256(estimateCost(req, subscriptionId, gasLimit, gasPrice)) * uint256(price) / AggregatorV3Interface(aggregator).decimals();
   }
 }
