@@ -93,11 +93,19 @@ contract DONconsumer is FunctionsClient, ConfirmedOwner {
    * @notice Return USD cost w/o aggregator decimals
    */
   function getCostEstimate(
-    Functions.Request memory req,
+    string calldata source,
+    bytes calldata secrets,
+    string[] calldata args,
     uint64 subscriptionId,
     uint32 gasLimit,
     uint256 gasPrice
   ) external view returns (uint256) {
+    Functions.Request memory req;
+    req.initializeRequest(Functions.Location.Inline, Functions.CodeLanguage.JavaScript, source);
+    if (secrets.length > 0) {
+      req.addRemoteSecrets(secrets);
+    }
+    if (args.length > 0) req.addArgs(args);
     (,int256 price,,,) = AggregatorV3Interface(aggregator).latestRoundData();
     return uint256(estimateCost(req, subscriptionId, gasLimit, gasPrice)) * uint256(price) / AggregatorV3Interface(aggregator).decimals();
   }
