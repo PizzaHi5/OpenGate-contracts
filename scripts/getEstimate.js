@@ -1,17 +1,21 @@
 //const { ethers } = require("ethers");
-const hre = require("hardhat");
+//const hre = require("@nomicfoundation/hardhat-foundry");
 
-//const { ethers } = require("hardhat");
+
+const hree = require("hardhat");
 require('dotenv').config();
 const DONconsumerABI = require('../out/DONconsumer.sol/DONconsumer.json');
 
 
 module.exports = async() => {
-    const provider = new hre.ethers.providers.JsonRpcProvider(process.env.MUMBAI_API_KEY);
-    const signer = hre.provider.getSigner();
+    const provider = new hree.ethers.providers.JsonRpcProvider(process.env.MUMBAI_API_KEY);
+    const signer = hree.provider.getSigner();
 
-    const number = await hre.provider.getBlockNumber();
+    const number = await hree.provider.getBlockNumber(); 
     console.log(number);
+
+    //const DONaddress = await 
+
 }
 
 module.exports.tags = ['getEstimate'];
