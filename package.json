@@ -1,6 +1,11 @@
 {
   "name": "hardhat-project",
+  "license": "MIT",
   "devDependencies": {
     "@nomicfoundation/hardhat-foundry": "^1.0.1"
+  },
+  "dependencies": {
+    "dotenv": "^16.0.3",
+    "ethers": "^5.7.1"
   }
 }
