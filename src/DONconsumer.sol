@@ -106,6 +106,7 @@ contract DONconsumer is FunctionsClient, ConfirmedOwner {
     }
     if (args.length > 0) req.addArgs(args);
     (,int256 price,,,) = AggregatorV3Interface(aggregator).latestRoundData();
-    return uint256(estimateCost(req, subscriptionId, gasLimit, gasPrice)) * uint256(price) / AggregatorV3Interface(aggregator).decimals();
+    // juels * (USD/LINK) / 1e18 (juels/Link)
+    return uint256(estimateCost(req, subscriptionId, gasLimit, gasPrice)) * uint256(price) / 1e18;
   }
 }
