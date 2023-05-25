@@ -6,8 +6,9 @@ import {ConfirmedOwner} from "@chainlink/contracts/src/v0.8/ConfirmedOwner.sol";
 import {AggregatorV3Interface} from "@chainlink/contracts/src/v0.8/interfaces/AggregatorV3Interface.sol";
 
 /**
- * @title Modifid Functions Consumer contract
- * @notice Mumbai Testnet Address: 0xCe908d3C2a5604dc5A4c5496afB04374C0de418b
+ * @title Modified Functions Consumer contract
+ * @notice Mumbai DONconsumer Address: 0x7C36dF24c4a1F2Ae74991dB612cB8e2E4ebd8B38
+ * @notice Mumbai Oracle Address: 0xeA6721aC65BCeD841B8ec3fc5fEdeA6141a0aDE4
  */
 contract DONconsumer is FunctionsClient, ConfirmedOwner {
   using Functions for Functions.Request;
